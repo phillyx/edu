@@ -8,7 +8,7 @@
  */
 function maxSum(arr: [], k: number): number {
   const n = arr.length
-  if (n < k) return -1;
+  if (n < k) return -1
 
   let maxSum = 0
   // 计算出第一个窗口的值
@@ -30,7 +30,7 @@ function maxSum(arr: [], k: number): number {
  * minimum-window-substring
  * 输入： S = 'ADOBECODEBANC', T= 'ABC'
  * 输出： 'BANC'
- * 
+ *
  * 分析：
  * 1. 在S中找出包含T所有字母的第一个子串
  * 2. 判断: 当前窗口内可能包含一个更小的能满足要求的窗口
@@ -40,9 +40,10 @@ function maxSum(arr: [], k: number): number {
  *    如果缩小后的窗口不能满足包含T所有字母的需求，则缩小窗口停止，从右边开始扩大窗口
  */
 export function minWindow(s: string, t: string): string {
-  if (s.length == 0 || t.length == 0) return '';
-  const map: { [key: string]: number } = {}
-  // 每个字符出现的次数
+  if (s.length == 0 || t.length == 0) return ''
+  const map: {[key: string]: number} = {}
+  // 使用欠款结构解决
+  // 每个字符出现的次数，也就是每个欠了多少钱
   for (let i = 0; i < t.length; i++) {
     if (map[t[i]]) {
       map[t[i]]++
@@ -50,41 +51,49 @@ export function minWindow(s: string, t: string): string {
       map[t[i]] = 1
     }
   }
+
   // 比较字符串的长度，
-  let count = t.length
+  let count = t.length // 总共欠这么多钱
   let left = 0
   let right = 0
   let max = Number.MAX_SAFE_INTEGER
   let res = s
 
   while (right < s.length) {
-    if(map[s[right]]){
-      if (map[s[right]] > 0) {
+    const charI = s[right]
+    // 命中i, 欠款减一
+    if (map.hasOwnProperty(charI)) {
+      if (map[charI] > 0) {
         count--
       }
-      map[s[right]]--
+      map[charI]-- // 'AADBC' 'ABC' map[A] =-1 存在负值的情况，小于0表明多还了
     }
 
     // 向右滑动窗口
     right++
-    // 每次窗口通过--count == 0来锚定满足条件：当前窗口已经包含所有目标字符
+    // 每次窗口通过--count == 0来锚定满足条件：当前窗口已经包含所有目标字符，已还清欠款
     while (count == 0) {
       // 当前窗口内有可能包含一个满足条件的更小的窗口
       if (right - left < max) {
         max = right - left
-        // 先取值
+        // 先存下来
         res = s.slice(left, right)
       }
-      map[s[left]]++
-      if (map[s[left]] > 0) {
-        count++
+      const charLeft = s[left]
+
+      if (map.hasOwnProperty(charLeft)) {
+        // 窗口左侧值，要达到还的正好的状态，如果多还了，要补回来，补多了，就又欠款了，count+1
+        map[charLeft]++
+        if (map[charLeft] > 0) {
+          count++
+        }
       }
+      // 从左侧开始缩小窗口
       left++
     }
   }
 
   return max === Number.MAX_SAFE_INTEGER ? '' : res
-
 }
 
 /**
@@ -97,19 +106,21 @@ export function minWindow(s: string, t: string): string {
  */
 function lengthOfLongestSubString(s: string): number {
   const map = new Map()
-  let start = 0, end = 0, maxLen = 0;
+  let start = 0,
+    end = 0,
+    maxLen = 0
   while (end < s.length) {
     let tmpKey = s[end]
     if (map.has(tmpKey)) {
       // 当map中已存在指针i的值，此刻就要确定窗口左边的位置，比如 abcb, start初始值为0，此刻出现b，那么新窗口为cb，因此要更新位置
       // start = Math.max(map.get(tmpKey) + 1, start);
-      start = Math.max(map.get(tmpKey), start);
+      start = Math.max(map.get(tmpKey), start)
     }
     // 有这种情形abcbcad，第一次出现c时长度为3，第一次出现b长度为2，所以要比较，新窗口就无效了，同理，指针继续向右，每次更新位置，获取最大值，最终就得出结果
-    maxLen = Math.max(maxLen, end - start + 1);
+    maxLen = Math.max(maxLen, end - start + 1)
     // 保存当前索引，+1是为了保证 如新入参数存在，直接向右划出当前窗口，
     // 这种方式很难理解
-    map.set(s[end], end + 1);
+    map.set(s[end], end + 1)
     end++
   }
   return maxLen
