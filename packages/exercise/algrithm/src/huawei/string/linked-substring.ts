@@ -25,7 +25,9 @@ function getLinkedSubstringIndex(str: string, substr: string) {
 
   const isAllMatched = () =>
     Object.values(map).every((x) => x.count === x.usedCount)
-
+  const resetMap = () => {
+    Object.values(map).forEach((x) => (x.usedCount = 0))
+  }
   for (let i = 0; i < len2; i++) {
     const ch = substr.charAt(i)
     if (!map[ch]) {
@@ -47,6 +49,8 @@ function getLinkedSubstringIndex(str: string, substr: string) {
 
     if (isAllMatched()) {
       return i
+    } else {
+      resetMap()
     }
   }
 
