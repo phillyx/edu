@@ -17,7 +17,7 @@
 若str2中有多个str1的组合子串，请返回第一个子串的起始位置。
  */
 
-function getLinkedSubstringIndex(str: string, substr: string) {
+function getLinkedSubstringFirstIndex(str: string, substr: string) {
   if (substr.length >= str.length) return -1
   const len1 = str.length
   const len2 = substr.length
@@ -38,19 +38,24 @@ function getLinkedSubstringIndex(str: string, substr: string) {
   }
 
   for (let i = 0; i < len1 - len2; i++) {
+    let bool = false
     for (let j = i; j < i + len2; j++) {
       const chr = str[j]
       if (!map[chr]) {
+        bool = true
         break
       } else {
         map[chr].usedCount += 1
       }
     }
 
+    if (bool) {
+      resetMap()
+      continue
+    }
+
     if (isAllMatched()) {
       return i
-    } else {
-      resetMap()
     }
   }
 
