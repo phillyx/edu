@@ -34,12 +34,12 @@ function getNums(arr: number[]) {
         t.pop()
         count++
       }
-      const vv = v * 2
-      if (t.length > 0 && t[t.length - 1] === vv) {
+      t.push(v * 2)
+
+      while (t.length > 1 && t[t.length - 1] === t[t.length - 2]) {
+        const vv = t.pop()
         t.pop()
-        t.push(vv * 2)
-      } else {
-        t.push(vv)
+        t.push(vv! * 2)
       }
     } else {
       t.push(v)
