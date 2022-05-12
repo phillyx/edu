@@ -5,15 +5,15 @@
 输入
 5 10 20 50 85 1
 输出
-1 170  ,lop00000000000000000000000000000000000000000000000000000000000000000000000000-=
+1 170  ,
 说明
 5+10+20+50=85， 输入85时，5、10、20、50、85全部出栈，入栈170，最终依次出栈的数字为1和170。
 
  */
 function getNums(arr: number[]) {
-  if (arr.length < 3) return arr.reverse()
-  const t = arr.slice(0, 2)
-  for (let i = 2; i < arr.length; i++) {
+  if (arr.length < 2) return arr
+  const t = arr.slice(0, 1)
+  for (let i = 1; i < arr.length; i++) {
     const v = arr[i]
     let sum = 0
     let j = t.length - 1
