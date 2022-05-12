@@ -34,7 +34,13 @@ function getNums(arr: number[]) {
         t.pop()
         count++
       }
-      t.push(v * 2)
+      const vv = v * 2
+      if (t.length > 0 && t[t.length - 1] === vv) {
+        t.pop()
+        t.push(vv * 2)
+      } else {
+        t.push(vv)
+      }
     } else {
       t.push(v)
     }
