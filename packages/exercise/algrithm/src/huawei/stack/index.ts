@@ -14,36 +14,50 @@ function getNums(arr: number[]) {
   if (arr.length < 2) return arr
   const t = arr.slice(0, 1)
   for (let i = 1; i < arr.length; i++) {
-    const v = arr[i]
-    let sum = 0
-    let j = t.length - 1
-    let bool = false
-    for (j; j >= 0; j--) {
-      sum += t[j]
-      // console.log(sum);
-      if (sum === v) {
-        bool = true
+    let v = arr[i]
+    while (true) {
+      let sum = 0
+      let j = t.length - 1
+      let bool = false
+      for (j; j >= 0; j--) {
+        sum += t[j]
+        // console.log(sum);
+        if (sum === v) {
+          bool = true
+          break
+        }
+      }
+
+      if (bool) {
+        const l = t.length - j
+        let count = 0
+        while (count < l) {
+          t.pop()
+          count++
+        }
+        v *= 2
+        // t.push(v * 2)
+
+        // while (t.length > 1 && t[t.length - 1] === t[t.length - 2]) {
+        //   const vv = t.pop()
+        //   t.pop()
+        //   t.push(vv! * 2)
+        // }
+      } else {
+        t.push(v)
         break
       }
-    }
-
-    if (bool) {
-      const l = t.length - j
-      let count = 0
-      while (count < l) {
-        t.pop()
-        count++
-      }
-      t.push(v * 2)
-
-      while (t.length > 1 && t[t.length - 1] === t[t.length - 2]) {
-        const vv = t.pop()
-        t.pop()
-        t.push(vv! * 2)
-      }
-    } else {
-      t.push(v)
     }
   }
   return t.reverse()
 }
+
+// console.log(getNums('5 10 20 50 85 1'.split(' ').map(x => +x)).join(' '))
+// console.log(getNums('1 1 3 5 2 3 5'.split(' ').map(x => +x)).join(' '))
+// console.log(getNums('6 1 2 3'.split(' ').map(x => +x)).join(' '))
+// console.log(getNums('12 6 1 2 3'.split(' ').map(x => +x)).join(' '))
+// console.log(getNums('2 22 12 6 1 2 3'.split(' ').map(x => +x)).join(' '))
+// console.log(getNums('1 2 3 4 10 10 10'.split(' ').map(x => +x)).join(' '))
+// console.log(getNums('2 8 2 3 5'.split(' ').map(x => +x)).join(' '))
+// console.log(getNums('1 3 2'.split(' ').map(x => +x)).join(' '))
+// console.log(getNums('1 3 2 1 5 6'.split(' ').map(x => +x)).join(' '))
