@@ -10,26 +10,49 @@ sum：6
  */
 
 export function maxSecquenceLength(arr: number[], n: number) {
-    let res = -1
+  let res = -1
 
-    for (let i = 0; i < arr.length; i++) {
-        if (arr[i] === n) {
-            res = 1
-            continue
-        }
-
-        let sum = arr[i]
-        let count = 1
-
-        for (let j = i + 1; j < arr.length; j++) {
-            count++
-            sum += arr[j]
-            if (sum === n) {
-                res = Math.max(res, count)
-                break;
-            }
-        }
+  for (let i = 0; i < arr.length; i++) {
+    if (arr[i] === n) {
+      res = 1
+      continue
     }
 
-    return res
+    let sum = arr[i]
+    let count = 1
+
+    for (let j = i + 1; j < arr.length; j++) {
+      count++
+      sum += arr[j]
+      if (sum === n) { 
+        res = Math.max(res, count)
+        continue
+      }
+    }
+  }
+
+  return res
+}
+/**
+ * https://www.jianshu.com/p/ad5d6c66b372
+ */
+export function maxSecquenceLengthUsePreFixAndMap(arr: number[], n: number) {
+  const sums = new Map([[0, -1]])
+  let preSum = 0 //sumi
+  let ans = 0
+
+  for (let i = 0; i < arr.length; i++) {
+    preSum += arr[i]
+
+    if (!sums.has(preSum)) {
+      sums.set(preSum, i)
+    }
+
+    const diffSum = preSum - n
+    if (sums.has(diffSum)) {
+      ans = Math.max(ans, i - sums.get(diffSum)!)
+    }
+  }
+
+  return  ans
 }

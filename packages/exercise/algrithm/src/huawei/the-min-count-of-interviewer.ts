@@ -74,7 +74,7 @@
  * 输出：6
  */
 
-export function minInterviewers(m: number, n: number, arr: Array<number[] | null>) {
+export function minInterviewers(m: number, n: number, arr: Array<number[]>) {
     //sort
     let sortedArr = arr.sort((a, b) => {
         if (a[0] !== b[0]) {
@@ -92,9 +92,9 @@ export function minInterviewers(m: number, n: number, arr: Array<number[] | null
         let i = 0
         while (i < sortedArr.length) {
             if (index > 0) {
-                if (next[1] <= sortedArr[i][0]) {
+                if (next![1] <= sortedArr[i][0]) {
                     // 删除元素，指针前移，索引不变
-                    next = sortedArr.splice(i, 1)[0]
+                    next = sortedArr.splice(i, 1)[0] as number[]
                     index--
                 } else {
                     i++

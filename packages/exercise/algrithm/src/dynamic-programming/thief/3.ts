@@ -1,4 +1,4 @@
-import {TreeNode} from '../binary-search-tree'
+import {TreeNode} from '../../binary-search-tree'
 
 /**
  * https://leetcode-cn.com/problems/house-robber-iii/solution/san-chong-fang-fa-jie-jue-shu-xing-dong-tai-gui-hu/

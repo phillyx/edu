@@ -7,6 +7,7 @@ function singleNumber(nums: number[]): number {
   if (nums.length === 0) return -1
   if (nums.length === 1) return nums[0]
   let n = nums[0]
+  // 使用亦或运算 
   for (let i = 1; i < nums.length; i++) {
     n ^= nums[i]
   }
