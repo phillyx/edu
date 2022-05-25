@@ -9,6 +9,15 @@
 说明
 5+10+20+50=85， 输入85时，5、10、20、50、85全部出栈，入栈170，最终依次出栈的数字为1和170。
 
+解题思路：
+
+每次新值v入栈时，要判断从后向前个x值的和是否等于当前值v
+注意，如果相等，此处并不是简单的入栈
+还要考虑刚生成的2v在栈内是否存在前x个值的和是否等于2v
+如此重复
+直到不满足条件，才入栈最终的值
+然后i++，新值入栈，重复以上过程
+我机试的时候就是简单的入栈了，没有内部的重复过程，导致通过率比较低
  */
 function getNums(arr: number[]) {
   if (arr.length < 2) return arr
@@ -61,3 +70,5 @@ function getNums(arr: number[]) {
 // console.log(getNums('2 8 2 3 5'.split(' ').map(x => +x)).join(' '))
 // console.log(getNums('1 3 2'.split(' ').map(x => +x)).join(' '))
 // console.log(getNums('1 3 2 1 5 6'.split(' ').map(x => +x)).join(' '))
+
+// https://www.typescriptlang.org/play?ssl=45&ssc=70&pln=44&pc=1#code/GYVwdgxgLglg9mABAcwKZQHIgLYGcAUAhgE7EBciYOARqsQNoC6AlIgN4BQiiMwiRpAHQAbVGGRQAFogA8iAEyti6EMSQliXRBAS4oifQF5EGwbmEwIqfAAYANIgCMzLcDjF+o-TETHHAbh5ZEyFRcSlAmABqKNZObm4vRAA3XxCGGEYtbgB3SRhRfihiEFQ47ISk3Bw0mwrE9EQAKzSoETEJaQBaJ3rEJOo4OGE04EJhXFQ+tw98JsCWgD5jGwWurvKErcRq7EQo4yh6JqzthIB6c+1dYdQROGR8XeZ-Pu5efl3fQ2NkzbOEoNhq0SlMAYDlIQANZvRAAXz6CL6H3wQOE-zOOjAen6rXa4W6zVhSR04CMiDq4LyBVQ-FJYH0cnR7Fh3DaAAc4Oz8C5wdx6VAYrCkeDUgAqQzyRAcRGIVATWnxAEckC4ST4P6w6iQmFnBFbfXwrTKKCqJBtZTJOiTHkcBFY3C3e6PNCYHAEADkAFYnDYFH6vX6ABw+xweszsixQfAexAe5iCbCEbkAD18i32KeYCaacBgYBjcezHAdTuED3wrqweBjjiciAAzIgfVKm17w7hIzBo7H44nk-g04YM1Eszm8wXe8XS6JnZX0NXPQA2eutjtdntF-up9OZ7OCXP5wvxlwzu7ll0L921qUrutriNR48JpM74d78dHqenm6zi-zt0aw9KV5ClRxb1XRt1yfKdt0HXdR33Q9JyLH9sTLCsq2vD170bRAABZfSIxwbGg7tnzgocRzHA8J2fNDHT-TCryAqUgwUPD20fcjYNfeD30Qz8UJPEtf3PZjAM9Osm3kMjNz7PiqI-Wiv1Q0T0KYy9JNrPCwObRAlzkijFIQmjkPooA

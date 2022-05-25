@@ -36,8 +36,3 @@ function getMaxMatrix(matrix: number[][]): number[] {
   }
   return ans
 }
-
-/**
- * 欢乐周末聚餐
- * https://blog.csdn.net/qq_34465338/article/details/124403459
- */

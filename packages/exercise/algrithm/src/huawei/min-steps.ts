@@ -10,7 +10,7 @@
 function minSteps(arr: number[]) {
   const len = arr.length
   let minSum = Number.MAX_SAFE_INTEGER
-  const len2 = len % 2 == 0 ? len / 2 : Math.floor(len / 2)
+  const len2 = Math.floor(len / 2)
 
   for (let i = 1; i < len2; i++) {
     // console.log('i',i)
