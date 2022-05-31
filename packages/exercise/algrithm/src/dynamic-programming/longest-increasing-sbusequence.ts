@@ -28,7 +28,7 @@ export function lengthOfLISUseBinarySearch(nums: number[]): number {
   for (let i = 1; i < len; i++) {
     const num = nums[i]
     // 如果cell中的元素都比当前索引值小，插入到cell最后
-    if (num > cell.slice(-1)[0]) {
+    if (num > cell.at(-1)!) {
       cell.push(num)
       continue
     }
@@ -36,7 +36,7 @@ export function lengthOfLISUseBinarySearch(nums: number[]): number {
     let left = 0
     let right = cell.length - 1
     while (left < right) {
-      const mid = Math.ceil((left + right) / 2)
+      const mid = left + ((right - left) >> 1)
       if (cell[mid] < num) {
         left = mid + 1
       } else {
