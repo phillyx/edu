@@ -15,3 +15,15 @@ function maxProfit(prices: number[]): number {
   }
   return max
 }
+/**
+ * https://leetcode.cn/problems/best-time-to-buy-and-sell-stock-ii/
+ * 贪心 */
+function minProfic(prices: number[]): number {
+  let res = 0
+
+  for (let i = 1; i < prices.length; i++) {
+    res += Math.max(prices[i] - prices[i - 1], 0)
+  }
+
+  return res
+}

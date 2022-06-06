@@ -95,7 +95,54 @@ export function minWindow(s: string, t: string): string {
 
   return max === Number.MAX_SAFE_INTEGER ? '' : res
 }
+function minWindow2(s: string, t: string): string {
+  const slen = s.length, tlen = t.length
+  if (tlen > slen) return ''
+  const map: { [key: string]: { count: number, usedCount: number } } = {}
+  for (let i = 0; i < tlen; i++) {
+      const c = t.charAt(i)
+      if (map[c]) {
+          map[c].count++
+      } else {
+          map[c] = { count: 1, usedCount: 0 }
+      }
+  }
 
+  let left = 0, right = 0
+  let count = t.length, start = 0, minLen = Number.MAX_SAFE_INTEGER
+  const isValid = () => Object.values(map).every(x => x.usedCount >= x.count)
+  while (right < slen) {
+      const c = s.charAt(right)
+      right++
+
+      if (map[c]) {
+          if (map[c].count > map[c].usedCount) count--
+          map[c].usedCount++
+      }
+      // while (isValid() && left < right) {
+      while (count === 0 && left < right) {
+
+          const d = s.charAt(left)
+          const distance = right - left
+          // console.log(left, right, s.substring(left, right))
+          if (distance < minLen) {
+              minLen = distance
+              start = left
+          }
+
+          if (map[d]) {
+              map[d].usedCount--
+              // console.log(c, map[c], count)
+              if (map[d].usedCount < map[d].count) {
+                  count++
+              }
+          }
+          left++
+      }
+  }
+
+  return minLen === Number.MAX_SAFE_INTEGER ? '' : s.substr(start, minLen)
+};
 /**
  * 最长子串
  * 给定一个字符串，请你找出其中不含有重复字符的最长子串的长度
@@ -104,24 +151,50 @@ export function minWindow(s: string, t: string): string {
  * 输出： 3
  * @param {string} s
  */
-function lengthOfLongestSubString(s: string): number {
+ var lengthOfLongestSubstring = function (s) {
   const map = new Map()
-  let start = 0,
-    end = 0,
-    maxLen = 0
+  let start = 0, end = 0, maxLen = 0;
+  let begin = 0
   while (end < s.length) {
-    let tmpKey = s[end]
-    if (map.has(tmpKey)) {
-      // 当map中已存在指针i的值，此刻就要确定窗口左边的位置，比如 abcb, start初始值为0，此刻出现b，那么新窗口为cb，因此要更新位置
-      // start = Math.max(map.get(tmpKey) + 1, start);
-      start = Math.max(map.get(tmpKey), start)
-    }
-    // 有这种情形abcbcad，第一次出现c时长度为3，第一次出现b长度为2，所以要比较，新窗口就无效了，同理，指针继续向右，每次更新位置，获取最大值，最终就得出结果
-    maxLen = Math.max(maxLen, end - start + 1)
-    // 保存当前索引，+1是为了保证 如新入参数存在，直接向右划出当前窗口，
-    // 这种方式很难理解
-    map.set(s[end], end + 1)
-    end++
+      let c = s[end]
+      end++
+
+      if (map.has(c)) {
+          start = Math.max(map.get(c), start);
+      }
+      if (end - start > maxLen) {
+          maxLen = end - start
+          begin = start
+      }
+
+      map.set(c, end);
   }
+  console.log(s.substr(begin, maxLen))
   return maxLen
-}
+};
+
+function lengthOfLongestSubstring2(s: string): number {
+  const map: { [key: string]: number } = {}
+  let left = 0, right = 0, res = 0
+  const len = s.length
+
+  while (right < len) {
+      const c = s.charAt(right)
+      right++
+      if (map[c]) {
+          map[c] += 1
+      } else {
+          map[c] = 1
+      }
+      while (map[c] > 1) {
+          const d = s.charAt(left)
+          left++
+          if (map[d]) {
+              map[d] -= 1
+          }
+      }
+      res = Math.max(res, right - left)
+
+  }
+  return res
+};
