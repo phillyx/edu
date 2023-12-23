@@ -20,6 +20,7 @@
   let arr = people.sort((a, b) => a - b)
   let left = 0, right = arr.length - 1;
   let retSums = 0
+  //  进行循环，退出循环条件为两指针相遇，表示需求都完成
   while (left <= right) {
     retSums++
     if (arr[left] + arr[right] <= limit) {
