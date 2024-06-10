@@ -39,6 +39,61 @@ function maxSum(arr: [], k: number): number {
  * 4. 判断： 如果缩小后的窗口仍能包含T所有字母的要求，则当前窗口可能是最小能满足题目的窗口，存下来，继续从左开始缩小窗口
  *    如果缩小后的窗口不能满足包含T所有字母的需求，则缩小窗口停止，从右边开始扩大窗口
  */
+
+function minWindow3(s: string, t: string): string {
+  const slen = s.length, tlen = t.length
+  if (tlen > slen) return ''
+  const need: { [key: string]: number } = {}
+  const window: { [key: string]: number } = {}
+
+  t.split('').forEach(x => {
+      if (need[x]) {
+          need[x]++
+      } else {
+          need[x] = 1
+      }
+  })
+  let left = 0, right = 0
+  let count = 0
+  let start = 0, maxLen = Number.MAX_SAFE_INTEGER
+  let res = ''
+  while (right < slen) {
+      const chr = s.charAt(right)
+      right++
+
+      if (need[chr]) {
+          if (window[chr]) {
+              window[chr]++
+          } else {
+              window[chr] = 1
+          }
+          if (window[chr] === need[chr]) {
+              count++
+          }
+      }
+
+      while (count === tlen) {
+          if (right - left < maxLen) {
+              maxLen = right - left
+              start = left
+              res = s.substring(start, right)
+          }
+
+          const outChar = s.charAt(left)
+          left++
+          if (need[outChar]) {
+              if (window[outChar] === need[outChar]) {
+                  count--
+              }
+              window[outChar]--
+          }
+      }
+  }
+
+  return res
+}
+
+
 export function minWindow(s: string, t: string): string {
   if (s.length == 0 || t.length == 0) return ''
   const map: {[key: string]: number} = {}
@@ -53,16 +108,17 @@ export function minWindow(s: string, t: string): string {
   }
 
   // 比较字符串的长度，
-  let count = t.length // 总共欠这么多钱
+  let count = t.length // 总共欠这么多钱'
   let left = 0
   let right = 0
   let max = Number.MAX_SAFE_INTEGER
   let res = s
-
+  let start = 0
+  let len = max
   while (right < s.length) {
     const charI = s[right]
     // 命中i, 欠款减一
-    if (map.hasOwnProperty(charI)) {
+    if (map[charI]) {
       if (map[charI] > 0) {
         count--
       }
@@ -76,12 +132,14 @@ export function minWindow(s: string, t: string): string {
       // 当前窗口内有可能包含一个满足条件的更小的窗口
       if (right - left < max) {
         max = right - left
+        start= left
+        len = right -left
         // 先存下来
         res = s.slice(left, right)
       }
       const charLeft = s[left]
 
-      if (map.hasOwnProperty(charLeft)) {
+      if (map[charLeft]) {
         // 窗口左侧值，要达到还的正好的状态，如果多还了，要补回来，补多了，就又欠款了，count+1
         map[charLeft]++
         if (map[charLeft] > 0) {

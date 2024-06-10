@@ -27,6 +27,7 @@ class TreeNode {
         return !this.left && !this.right
     }
 }
+
 class BinaryTree {
 
     root: TreeNode
@@ -41,12 +42,11 @@ class BinaryTree {
     private createBinaryTreeByArray(nums: Array<number>) {
         const n = nums.length
         const trees = []
-
         for (let i = 0; i < n; i++) {
             trees.push(new TreeNode(nums[i]))
         }
-
-        const mid = n / 2 - 1
+        // 1 12 13 121 122 131 132
+        const mid = n >> 1 //  (n/2 -1)=> 7/2 -1 = 2.5
 
         for (let i = 0; i < mid; i++) {
 
@@ -74,15 +74,15 @@ class BinaryTree {
     }
     public getMaxDegree() {
         let maxDgree = 0;
-        
+
         const func = (node: TreeNode, degree: number) => {
-            const tmp = degree + node.value
+            const depth = degree + node.value
             if (!node.isLeafNode()) {
-                node.left && func(node.left, tmp)
-                node.right && func(node.right, tmp)
+                node.left && func(node.left, depth)
+                node.right && func(node.right, depth)
             } else {
-                if (tmp > maxDgree) {
-                    maxDgree = tmp
+                if (depth > maxDgree) {
+                    maxDgree = depth
                 }
             }
         }
@@ -102,4 +102,5 @@ console.log(BinaryTree.resolve('0 9 20 -1 -1 15 7 -1 -1 -1 -1 3 2'))
 console.log(BinaryTree.resolve('0 100 20 -1 -1 15 7 -1 -1 -1 -1 3 2'))
 console.log(BinaryTree.resolve('0 9 20 -1 -1 15 30 -1 -1 -1 -1 3 2'))
 
-// https://www.typescriptlang.org/play?#code/PQKhCgAIUxNv0LO1AAcoKjlAxcoSTlCIFoGH-Dz1swIKDBOh0Cg5QTa9ABdxUC65bYwB1NB1bUAsIwLk9A2J2MCiUwU+jjACeUBICYBCDYYF3owADpgQMjAjUGBOWMAhboDfTQC+pgIAZwgXCVA05pLsgTgtigASNAFOqBZeUB2-guqBIcxSixgZ4MpQ2IDdFQGtytQEI2qQJPKmEY2xCTWgL8JgKXGgGymgAxKDvLKKgB04IDJ8YCmioDzxoAP8QBc4Aj+mOAADJAAnJAATGUAtACMkA2Q9QCskADsTY3NvY0AzFXggBc2ud1sgF5exOBpgF+KOeCAK-GAe2pBxJGx8Yqq-QAcM9DAM+AAxgD2AHYAzgAukAAKADIAggDCAKIAEgDyjwAi7wASgB9ABqz0eAFV3pAALzdGYnAA2AEMrldIAAVABOAFNcQA5M4AE1xkAA3lBINSAG4opEAV1xYwuDIAtgAjXHYqnUpG4gBmNzGOPxRNJkAAPpBWUikbzINiAJYAcwAFsKsXjCSSydLZfLqdTztcbtiGScbmdsQAKOlIgD8LPZXOxABpIPyhU6tWLdVKZQy5R7leqbj7RTqJfqg0iAJQUhVGyA3NVKq5Je1MuGQe1w2HwhkXUkCpUXXHEyAOyBlMb2pNG1PppJeu7w1v5wvFwVlitVwNyyBjVsN6lNjOhjU5ydtguQIsl3uV6sGoeK1UahUAXwVAAcGRykUqTpB049cSiBeLcTaE5Tk8m8TcGdiLpAAITjluCu4AMl-H5fjO27gDupyouikAAEJlii2IAJ6RomCrYmcZyapG14HEau7KnSNxkhcupXCK2rXgA2gAuthxqXLc5qWtaNqsmyJGQM82LYii8EADwsa6AB8d6jimaYZkRpIYvCX4nHiKIETBFxwYh2pQfBHFcfBzHslccYiUBaFtqJzYSbiVzkSU1HJmBya4Uq+FkrJF4KbBCGRmpGncdprFjJ5vH8dyQmJg+RomrcMo5ixGb8hcKqpiJYV3Ga+JSZAVEiQK1qQDa-J3EqOYlAA3KekA8TKxVKgA1JVwkhSFyVmUk+5XGqzG4gA7r6UY3lF5FKpRcZ6XVkA2XViWQGySqVvCb7ANUTQtDRD6Zdi2W5SV8JFSVZWTcSFXVcJInJkqArZQ15n9Zm9LZgW8JPG8Xy-ACILglC7wJiaNxlkyS3DeNrYAJLdgAHjmVTQCVlWLcNybjTOQOkqD8LgzANr5VD9R6UdRonWtP4I7ioNlRctUwyF-0-teObneRgMg5RhXYyFuM5ZTupXYyZLvnO90fD8-xAmCELQqTZPDTTl0du2bOkkzD47mLI2-XVLPwyDpUyqLiuQHDG43FT0nauZauI1Z2vUqrevXhz2bc3dLx809guvSLwXmw+EuUUkM7Tlbupy9ZcsK3Vo0hU+L5vudSSlkiBG2kjAmQMDNtczzDuPQLL3C+9IG2QeR4niquI3AAsiiwN-LiKrarebshetbLl381f4gVjMJXRdwCkWJ7wsxuqkX6pIeqSLfMoGnLcgmsKJ-eYvjTcbK7jmo-apAUOmSncss++m9nheV66reWuK5vHb-pA3cXCc-ekt+Qoeovu5De7m8+xfV832-euP0vL9k1uSAuIkRXDJHPc2LMn6QETo3CuY8T7u1gc3Ne0kl4ByNMHABIlQ7LR7jaAy6EPQlCxsNcOr4JpNzHiBBUtx5LHkVGZM4SIaQ3nomMeiZYVQINoqaSAcFVrwnokkK4u4jw3BtAAckgBIuM0clSx25DaBOSdvyxVTNAmssjG67htASF0U8RJkLfOWTqillKRhtPw2RRdS5NyrjXf+StQKnDokw3ELYzgqhtGYty2pvaMOYTeCRZRKg1G6OEtonRwl9HCf0aoMi9JhTcR4rxPiVL4n8VcJhLDJFlHqCUMoYSYmRK6DEmJcSqgJJcdcZJSJPHeNcuk9xeIsmBNyRUaodQeiNEif0Lp0TumQAqQkoAA
+
+// https://www.typescriptlang.org/play/?#code/PQKhCgAIUxNv0LO1AAcoKjlAxcoSTlCIFoGH-Dz1swIKDBOh0Cg5QTa9ABdxUC65bYwB1NB1bUAsIwLk9A2J2MCiUwU+jjACeUBICYBCDYYF3owADpgQMjAjUGBOWMAhboDfTQC+pgIAZwgXCVA05pLsgTgtigASNAFOqBZeUB2-guqBIcxSixgZ4MpQ2IDdFQGtytQEI2qQJPKmEY2xCTWgL8JgKXGgGymgAxKDvLKKgB04IDJ8YCmioDzxoAP8QBc4Aj+mOAADJAAnJAATGUAtACMkA2Q9QCskADsTY3NvY0AzFXggBc2ud1sgF5exOBpgF+KOeCAK-GAe2pBxJGx8Yqq-QAcM9DAM+AAxgD2AHYAzgAukAAKADIAggDCAKIAEgDyjwAi7wASgB9ABqz0eAFV3pAALzdGYnAA2AEMrldIAAVABOAFNcQA5M4AE1xkAA3lBINSAG4opEAV1xYwuDIAtgAjXHYqnUpG4gBmNzGOPxRNJkAAPpBWUikbzINiAJYAcwAFsKsXjCSSydLZfLqdTztcbtiGScbmdsQAKOlIgD8LPZXOxABpIPyhU6tWLdVKZQy5R7leqbj7RTqJfqg0iAJQUhVGyA3NVKq5Je1MuGQe1w2HwhkXUkCpUXXHEyAOyBlMb2pNG1PppJeu7w1v5wvFwVlitVwNyyBjVsN6lNjOhjU5ydtguQIsl3uV6sGoeK1UahUAXwVAAcGRykUqTpB049cSiBeLcTaE5Tk8m8TcGdiLpAAITjluCu4AMl-H5fjO27gDupyouikAAEJlii2IAJ6RomCrYmcZyapG14HEau7KnSNxkhcupXCK2rXgA2gAuthxqXLc5qWtaNqsmyJGQM82LYii8EADwsa6AB8d6jimaYZkRpIYvCX4nHiKIETBFxwYh2pQfBHFcfBzHslccYiUBaFtqJzYSbiVzkSU1HJmBya4Uq+FkrJF4KbBCGRmpGncdprFjJ5vH8dyQmJg+RomrcMo5ixGb8hcKqpiJYV3Ga+JSZAVEiQK1qQDa-J3EqOYlAA3KekA8TKxVKgA1JVwkhSFyVmUk+5XGqzG4gA7r6UY3lF5FKpRcZ6XVkA7sNwDAC0LRVC0-RTY09RVNN9T9PNgwJXRdxskqlbwm+AkCZN43UsxwDTQ0cawgdHSnd0OZVEkrQ0Q+mXYtluUlfCRUlWVW3EhV1XCSJyZKgK2UNeZ-WZvS2YFvCTxvF8vwAiC4JQu8CYmjcZZMk9w2JZ6P4AJLdgAHnd0AlZVLRA6FG3rmGxOkmT8LTTANr5VT9R6TT1Ig29ROk6VMq1cNdX462145uD5GtozuIk5RhU8w+fM5T+15Q4yZLvnO8MfD8-xAmCELQiLoui9LkMdu26u6sr1nKzZ5unqDNoznLZNlRcZvO7Rpr0xqkvSdq5nu6TVm+0aqszhrWba7rLz60jRuo6bwWR-VId9ZRSQztOG43FhGfUqNzulyFTshU+L5vuDSSlkiBG2szB0k5r2Y63DieI4bKMm+jIG2QeR4niquI3AAsiiJN-LiKrare6che9bLT388-4gVSvrf7ApFie8LMbqpF+qSHqkhvzKBpy3IJpdS+i-jpK7qmOYX9qkBU6Z7e4srqvvt-M8F4ry6lvD7X238Oz-kgHvC4Jwj6km-EKc+uIX5qiGsXb+edoGwPgVgguKC0EYPNluSAuIkRXDJPeYuqtn6vwOqvGel9wHF0YevD+8I6Fqntkacuos+EOwyvvG0Bl0IehKNzYa1dXyQDYZfECCpbjyWPIqMyZwkQ0hvPRMY9EywqhYX7cKcFXrwnokkK4u4jw3BtAAckgDYuM9clSN25DaFukA24xTimqSAB0JFJFXruG0BIXS3xEtIt85ZOqKWUpGG0xjHFj0nmvOeC9iEjRmDuMK6jcQtjOCqG0MS3LalzmojRN4bFlEqDUW6zQ2idFqT0JpkBZpVAcXpbJ-I8kFKKSpfEpSrjqM0bYso9QShlBqX0Fo7QuhTKma09ppw6I5O6YU1yfTcl4kGeUkZFRqh1GafU-oBzGm3QWYNIAA

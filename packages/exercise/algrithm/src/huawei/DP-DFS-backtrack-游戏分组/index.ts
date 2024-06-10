@@ -41,3 +41,41 @@ function setGameGroups(line: string) {
 }
 
 console.log(setGameGroups('1 2 3 4 5 6 7 8 9 10'))
+
+
+function GameGrouping(values: number[]) {
+    // sum
+    const total = values.reduce((a, b) => a + b, 0)
+    const len = values.length
+    const visited = new Array(values.length).fill(false)
+    let ans = total
+    const arr = [] as number[]
+
+    const backtrack = (selectedCount: number, sum: number) => {
+        if(arr.length === len >>1){
+            const tmp  = arr.reduce((a,b)=>a+b,0)
+             ans = Math.min(ans, Math.abs(total - 2*tmp))
+            return
+        }
+        // if (selectedCount === len >> 1) {
+        //     ans = Math.min(ans, Math.abs(total - 2*sum))
+        //     return
+        // }
+
+
+        for (let i = 0; i < len; i++) {
+            if (visited[i]) continue
+        
+            visited[i] = true
+            arr.push(values[i])
+            backtrack(selectedCount + 1, sum + values[i])
+            arr.pop()
+            visited[i] = false
+
+        }
+    }
+
+    backtrack(0, 0)
+    return ans
+
+}

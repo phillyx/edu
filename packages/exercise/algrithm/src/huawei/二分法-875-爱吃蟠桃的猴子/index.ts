@@ -20,7 +20,7 @@ function minEatingSpeed(piles: number[], h: number): number {
     // 每小时最多吃完一颗树，给定的time小于数组个数，返回0
     if (n > h) return 0;
 
-    let l = 1, r = 1e9// 左闭右开
+    let l = 1, r = Math.max(...piles) + 1// 左闭右开
 
     while (l < r) {
         const mid = l + ((r - l) >> 1)
